@@ -13,7 +13,7 @@ class AuthApi extends ChangeNotifier {
   final ApiRoutes _apiRoutes = ApiRoutes();
   ButtonState buttonState = ButtonState.idle;
   HiveStorage hiveStorage = HiveStorage(Hive.box(HiveKeys.appBox));
-
+String userNumber='';
   Future<void> signUp(phoneNumber, password, context) async {
     buttonState = ButtonState.loading;
     notifyListeners();
@@ -74,7 +74,7 @@ notifyListeners();
   }
 
   String? getStoredNumber() {
-    var userNumber = hiveStorage.get<String?>(HiveKeys.user);
+     userNumber = hiveStorage.get<String?>(HiveKeys.user)!;
     notifyListeners();
     return userNumber;
   }

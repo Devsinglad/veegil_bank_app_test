@@ -67,7 +67,7 @@ final hintTextStyle = GoogleFonts.plusJakartaSans(
 );
 
 final inputTextStyle = GoogleFonts.plusJakartaSans(
-  fontSize: 12.sp,
+  fontSize: 15.sp,
   fontWeight: FontWeight.w500,
   color: const Color(0xFF160D07),
 );

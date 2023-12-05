@@ -9,3 +9,6 @@ toastMessage({required String text, bool long = false, bool isError =false}) {
       backgroundColor: Colors.blue,
       textColor: Colors.white);
 }
+
+const credit="credit";
+const debit="debit";

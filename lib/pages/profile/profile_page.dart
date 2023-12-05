@@ -44,14 +44,14 @@ class ProfilePage extends StatelessWidget {
                   height: 32.h,
                 ),
                 Text(
-                  'M Hanivan Adif',
+                  'Veegil Bank',
                   style: largeTextStyle,
                 ),
                 SizedBox(
                   height: 8.h,
                 ),
                 Text(
-                  'youremailinhere@mail.com',
+                  'veegiBank@mail.com',
                   style: xSmallTextStyle,
                 ),
                 SizedBox(

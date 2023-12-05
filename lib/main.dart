@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:veegil_bank_app_test/src/main.dart';
 import 'package:veegil_bank_app_test/utils/providerSetUp.dart';
 
-import 'data/auth/auth_request.dart';
 import 'data/local_database.dart/local_db.dart';
 
 Future<void> main() async {

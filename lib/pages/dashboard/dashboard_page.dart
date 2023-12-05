@@ -18,22 +18,25 @@ class DashboardPage extends StatefulWidget {
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
-String storedAccountNumber='';
+
+String storedAccountNumber = '';
+
 class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
-    var authApi = Provider.of<AuthApi>(context, listen: false);
-    storedAccountNumber =  authApi.getStoredNumber()??'';
     Future.delayed(Duration.zero).then((value) async {
-
+      var authApi = Provider.of<AuthApi>(context, listen: false);
+      authApi.getStoredNumber()!;
       var transactApi = Provider.of<TransactionGetApi>(context, listen: false);
       await transactApi.getUsers(context);
     });
-        super.initState();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var transactApi = Provider.of<TransactionGetApi>(context);
+    var authApi = Provider.of<AuthApi>(context);
     return Scaffold(
       backgroundColor: scaffoldColor,
       appBar: AppBar(
@@ -58,7 +61,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         actions: [
           InkWell(
-            onTap: ()  {
+            onTap: () {
               // Navigator.of(context).pushNamed(
               //   RouteGenerator.notificationPage,
               // );
@@ -75,28 +78,25 @@ class _DashboardPageState extends State<DashboardPage> {
         shrinkWrap: true,
         padding: REdgeInsets.all(24),
         children: [
-           BalanceCard(accountNumber: storedAccountNumber,accountBalance: '10,000'),
+          BalanceCard(
+              accountNumber: authApi.userNumber,
+              accountBalance: ' ${transactApi.userAccount?.balance}'),
           SizedBox(
             height: 24.h,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _card('assets/svg/send_icon.svg', 'Transfer', () {
                 Navigator.of(context).pushNamed(
                   RouteGenerator.transferPage,
                 );
               }),
+              SizedBox(width: 20.w),
               _card('assets/svg/withdraw_icon.svg', 'Withdraw', () {
                 Navigator.of(context).pushNamed(
                   RouteGenerator.withdrawPage,
                 );
               }),
-              _card('assets/svg/bill_icon.svg', 'Payment', () {
-                Navigator.of(context).pushNamed(
-                  RouteGenerator.paymentPage,
-                );
-              })
             ],
           ),
           SizedBox(
@@ -109,39 +109,33 @@ class _DashboardPageState extends State<DashboardPage> {
           SizedBox(
             height: 16.h,
           ),
-          Consumer<TransactionGetApi>(
-            builder: (context, snapshot,_) {
-              return SizedBox(
-                height: 56.h,
-                width: double.maxFinite,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: snapshot.userList.length,
-                    padding: REdgeInsets.all(0),
-                    itemBuilder: (context, index) => Container(
-                          width: 56.w,
-                          height: 56.h,
-                          margin: REdgeInsets.only(right: 12.w),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.r))),
-                          child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.r)),
-                              child: Image.asset(
-                                'assets/images/friends_image.png',
-                                fit: BoxFit.fill,
-                              )),
-                        )),
-              );
-            }
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-
+          Consumer<TransactionGetApi>(builder: (context, snapshot, _) {
+            return SizedBox(
+              height: 56.h,
+              width: double.maxFinite,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: snapshot.userList.length,
+                  padding: REdgeInsets.all(0),
+                  itemBuilder: (context, index) => Container(
+                        width: 56.w,
+                        height: 56.h,
+                        margin: REdgeInsets.only(right: 12.w),
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.r))),
+                        child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.r)),
+                            child: Image.asset(
+                              'assets/images/friends_image.png',
+                              fit: BoxFit.fill,
+                            )),
+                      )),
+            );
+          }),
 
         ],
       ),

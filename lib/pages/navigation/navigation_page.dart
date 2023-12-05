@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import '../../src/navigation_src.dart';
+import '../History/history_page.dart';
 
 class NavigationPage extends StatefulWidget {
   const NavigationPage({Key? key}) : super(key: key);
@@ -13,11 +14,12 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     DashboardPage(),
-    CardPage(),
+    HistoryPage(),
     ProfilePage()
   ];
 
   void _onItemTapped(int index) {
+
     setState(() {
       _selectedIndex = index;
     });
@@ -26,9 +28,6 @@ class _NavigationPageState extends State<NavigationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //     title: const Text('Flutter BottomNavigationBar Example'),
-      //     backgroundColor: Colors.green),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

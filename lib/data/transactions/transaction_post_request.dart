@@ -11,7 +11,7 @@ class TransactionPostApi extends ChangeNotifier {
 
   final ApiService _apiService = ApiService();
   final ApiRoutes _apiRoutes = ApiRoutes();
-  Future<void> transfer({required String phoneNumber,required String amount,context})async {
+  Future<void> transfer({required String phoneNumber,required String amount,required BuildContext context})async {
     buttonState = ButtonState.loading;
     notifyListeners();
     ResponseModel responseModel = await _apiService.call(
@@ -26,6 +26,29 @@ class TransactionPostApi extends ChangeNotifier {
       buttonState = ButtonState.success;
       notifyListeners();
       Navigator.pushReplacementNamed(context, RouteGenerator.navigationPage);
+
+      print(responseModel.response.body);
+    }else{
+      buttonState = ButtonState.idle;
+      notifyListeners();
+    }
+
+  }
+  Future<void> withdrawal({required String phoneNumber,required String amount,required BuildContext context})async {
+    buttonState = ButtonState.loading;
+    notifyListeners();
+    ResponseModel responseModel = await _apiService.call(
+      method: HttpMethod.post,
+      endpoint: '${_apiRoutes.baseUrl}${_apiRoutes.withdrawal}',
+      reqBody: {
+        "phoneNumber": phoneNumber,
+        "amount":amount,
+      }
+    );
+    if(responseModel.isSuccess){
+      buttonState = ButtonState.success;
+      notifyListeners();
+      Navigator.pushReplacementNamed(context, RouteGenerator.withDrawSuccessPage);
 
       print(responseModel.response.body);
     }else{

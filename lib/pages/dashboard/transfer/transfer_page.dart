@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:veegil_bank_app_test/utils/constants.dart';
 
 import '../../../config/routes.dart';
+import '../../../data/transactions/transaction_get_request.dart';
+import '../../../utils/enum.dart';
+import '../../../utils/helper.dart';
 
 class TransferPage extends StatelessWidget {
   const TransferPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var transactApi = Provider.of<TransactionGetApi>(context);
+
     return Scaffold(
       backgroundColor: scaffoldColor,
       appBar: AppBar(
@@ -39,65 +45,6 @@ class TransferPage extends StatelessWidget {
         padding: REdgeInsets.all(24),
         children: [
           Text(
-            'Transfer to Friend',
-            style: mediumTextStyle,
-          ),
-          SizedBox(
-            height: 16.h,
-          ),
-          Row(
-            children: [
-              Container(
-                height: 56.h,
-                width: 56.w,
-                padding: REdgeInsets.all(14),
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(6.r))),
-                child: SvgPicture.asset('assets/svg/search_icon.svg'),
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              Expanded(
-                child: SizedBox(
-                  height: 56.h,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: 7,
-                      padding: REdgeInsets.all(0),
-                      itemBuilder: (context, index) => InkWell(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                RouteGenerator.transferToFriendsPage,
-                              );
-                            },
-                            child: Container(
-                              width: 56.w,
-                              height: 56.h,
-                              margin: REdgeInsets.only(right: 12.w),
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.r))),
-                              child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.r)),
-                                  child: Image.asset(
-                                    'assets/images/friends_image.png',
-                                    fit: BoxFit.fill,
-                                  )),
-                            ),
-                          )),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          Text(
             'Bank transfer',
             style: mediumTextStyle,
           ),
@@ -118,7 +65,7 @@ class TransferPage extends StatelessWidget {
               contentPadding: REdgeInsets.all(0),
               leading: SvgPicture.asset('assets/svg/bank_card_icon.svg'),
               title: Text(
-                'Bank Rakjat Cibodas',
+                'Bank Veegil',
                 style: GoogleFonts.plusJakartaSans(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
@@ -151,28 +98,59 @@ class TransferPage extends StatelessWidget {
           SizedBox(
             height: 16.h,
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            itemCount: 14,
-            padding: REdgeInsets.all(0),
-            itemBuilder: (context, index) => ListTile(
-              title: Text(
-                'Transfer to Faiza Mubarak',
-                style: smallTextStyle,
-              ),
-              subtitle: Text(
-                'June 7 , 2022 at 11:10 PM',
-                style: xSmallTextStyle,
-              ),
-              trailing: Text(
-                '-\$1,200',
-                style: mediumTextStyle.copyWith(color: redColor),
+          Visibility(
+            visible: transactApi.buttonState == ButtonState.loading,
+            child: Center(
+              child: SizedBox(
+                height: 60.h,
+                width: 60.w,
+                child: const CircularProgressIndicator(
+                  color: primaryColor,
+                ),
               ),
             ),
-          )
-        ],
+          ),
+          Visibility(
+            visible: transactApi.buttonState == ButtonState.success,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              itemCount: transactApi.transactionList.length,
+              padding: REdgeInsets.all(0),
+              itemBuilder: (context, i) => ListTile(
+                title: Text(
+                  '${transactApi.transactionList[i].phoneNumber}',
+                  style: smallTextStyle,
+                ),
+                subtitle: Text(
+                  '${transactApi.transactionList[i].created}',
+                  style: xSmallTextStyle,
+                ),
+                trailing: transactApi.transactionList[i].type == credit
+                    ? Text(
+                  '+\N ${transactApi.transactionList[i].amount}',
+                  style: mediumTextStyle.copyWith(color: Colors.green),
+                )
+                    : Text(
+                  '-\N ${transactApi.transactionList[i].amount}',
+                  style: mediumTextStyle.copyWith(color: redColor),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+              visible: transactApi.buttonState == ButtonState.idle,
+              child: Align(
+                alignment: AlignmentDirectional.center,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 100.0),
+                  child: Text(
+                    'An Error Occurred...Try Again',
+                    style: mediumTextStyle,
+                  ),
+                ),
+              ))        ],
       ),
     );
   }

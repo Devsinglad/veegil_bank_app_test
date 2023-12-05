@@ -55,6 +55,7 @@ class CTextFormField extends StatelessWidget {
       controller: textControllor,
       decoration: InputDecoration(
         hintStyle: hintTextStyle,
+
         filled: true,
         fillColor: fillColor,
         focusColor: primaryColor,
