@@ -1,17 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:veegil_bank_app_test/components/c_elevated_button.dart';
-import 'package:veegil_bank_app_test/utils/constants.dart';
-import 'package:veegil_bank_app_test/widgets/balance_card.dart';
 
-import '../../../components/c_text_form_field.dart';
-import '../../../config/routes.dart';
-import '../../../data/auth/auth_request.dart';
-import '../../../data/transactions/transaction_get_request.dart';
-import '../../../data/transactions/transaction_post_request.dart';
-import '../../../utils/enum.dart';
-import '../../../utils/validator.dart';
+
+import '../../../src/dashboard_src.dart';
 
 class WithdrawPage extends StatefulWidget {
   const WithdrawPage({super.key});

@@ -1,4 +1,3 @@
-import 'package:veegil_bank_app_test/pages/dashboard/withdraw/withdrawal_success_page.dart';
 import 'package:veegil_bank_app_test/src/routes.dart';
 
 class RouteGenerator {

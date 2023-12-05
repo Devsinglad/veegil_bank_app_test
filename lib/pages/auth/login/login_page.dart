@@ -1,7 +1,5 @@
-import 'package:veegil_bank_app_test/components/phone_number_field.dart';
 
 import '../../../src/auth_src.dart';
-import '../../../utils/enum.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});

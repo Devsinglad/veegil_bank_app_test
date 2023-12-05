@@ -10,3 +10,4 @@ export '../pages/auth/register/register_success_page.dart';
 export '../pages/dashboard/notification/notification_page.dart';
 export '../pages/navigation/navigation_page.dart';
 export '../pages/profile/manage_notification_page.dart';
+export 'package:veegil_bank_app_test/pages/dashboard/withdraw/withdrawal_success_page.dart';

@@ -1,15 +1,6 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:veegil_bank_app_test/utils/enum.dart';
-import 'package:veegil_bank_app_test/widgets/balance_card.dart';
-import '../../data/auth/auth_request.dart';
-import '../../data/transactions/transaction_get_request.dart';
-import '../../utils/constants.dart';
-import '../../config/routes.dart';
-import '../../utils/helper.dart';
+
+
+import '../../src/dashboard_src.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -22,9 +13,9 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+
       loadData();
-    });
+
     super.initState();
   }
 

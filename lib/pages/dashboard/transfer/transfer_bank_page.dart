@@ -1,17 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:veegil_bank_app_test/components/c_elevated_button.dart';
-import 'package:veegil_bank_app_test/data/transactions/transaction_get_request.dart';
-import 'package:veegil_bank_app_test/src/auth_src.dart';
-import 'package:veegil_bank_app_test/utils/constants.dart';
-import 'package:veegil_bank_app_test/components/c_text_form_field.dart';
-import 'package:veegil_bank_app_test/utils/enum.dart';
-import 'package:veegil_bank_app_test/widgets/balance_card.dart';
 
-import '../../../data/transactions/transaction_post_request.dart';
-import '../../../utils/validator.dart';
+
+import '../../../src/dashboard_src.dart';
 
 class TransferBankPage extends StatefulWidget {
   const TransferBankPage({super.key});

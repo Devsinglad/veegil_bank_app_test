@@ -8,3 +8,8 @@ export 'package:veegil_bank_app_test/utils/constants.dart';
 export '../../../components/c_text_form_field.dart';
 export '../../../providers/password_provider.dart';
 export '../../../config/routes.dart';
+export 'package:veegil_bank_app_test/utils/enum.dart';
+export 'package:flutter_svg/svg.dart';
+export '../../../components/phone_number_field.dart';
+export '../../../providers/confirm_password_provider.dart';
+export '../../../utils/validator.dart';

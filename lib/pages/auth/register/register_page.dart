@@ -1,17 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:veegil_bank_app_test/utils/enum.dart';
 
-import '../../../components/c_elevated_button.dart';
-import '../../../components/c_text_form_field.dart';
-import '../../../components/phone_number_field.dart';
-import '../../../data/auth/auth_request.dart';
-import '../../../providers/confirm_password_provider.dart';
-import '../../../providers/password_provider.dart';
-import '../../../utils/constants.dart';
-import '../../../utils/validator.dart';
+
+import '../../../src/auth_src.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({super.key});

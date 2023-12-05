@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../../../components/c_elevated_button.dart';
-import '../../../config/routes.dart';
-import '../../../utils/constants.dart';
+
+import '../../../src/dashboard_src.dart';
 
 class WithDrawSuccess extends StatelessWidget {
   const WithDrawSuccess({super.key});
