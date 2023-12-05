@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show Response;
 import 'package:veegil_bank_app_test/src/data_src.dart';
 
-import '../utils/enum.dart';
 import '../utils/helper.dart';
 
 enum HttpMethod { get, post, patch, put, delete }
@@ -83,35 +82,24 @@ class ApiService {
 
   ResponseModel _handleResponse(Response response) {
     try{
-      ButtonState _buttonState;
 
       if (response.statusCode == 200) {
         var decode = jsonDecode(response.body);
 
-        _buttonState = ButtonState.success;
         toastMessage(
           text: decode['message'],
         );
         return ResponseModel(response);
       } else if (response.statusCode == 401) {
         var decode = jsonDecode(response.body);
-
-        _buttonState = ButtonState.idle;
-
         toastMessage(text: decode['message'], isError: true);
         return ResponseModel(response);
       } else if (response.statusCode == 404) {
         var decode = jsonDecode(response.body);
-
-        _buttonState = ButtonState.idle;
-
         toastMessage(text: decode['message'], isError: true);
 
         return ResponseModel(response);
       } else {
-
-        _buttonState = ButtonState.idle;
-
         toastMessage(text: 'Bad Request', isError: true);
         return ResponseModel(response);
       }

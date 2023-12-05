@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,8 +8,7 @@ import 'package:veegil_bank_app_test/utils/constants.dart';
 
 import '../../config/routes.dart';
 import '../../data/auth/auth_request.dart';
-import '../../data/local_database.dart/abstractive_hive_storage.dart';
-import '../../data/local_database.dart/local_db.dart';
+
 import '../../data/transactions/transaction_get_request.dart';
 import '../../widgets/balance_card.dart';
 
@@ -20,22 +18,22 @@ class DashboardPage extends StatefulWidget {
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
-String? storedAccountNumber;
+String storedAccountNumber='';
 class _DashboardPageState extends State<DashboardPage> {
   @override
   void initState() {
     var authApi = Provider.of<AuthApi>(context, listen: false);
-    var transactApi = Provider.of<TransactionGetApi>(context, listen: false);
-    storedAccountNumber = authApi.getStoredNumber();
-    transactApi.getUsers();
-      super.initState();
+    storedAccountNumber =  authApi.getStoredNumber()??'';
+    Future.delayed(Duration.zero).then((value) async {
+
+      var transactApi = Provider.of<TransactionGetApi>(context, listen: false);
+      await transactApi.getUsers(context);
+    });
+        super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var transactApi = Provider.of<TransactionGetApi>(context, listen: false);
-
-
     return Scaffold(
       backgroundColor: scaffoldColor,
       appBar: AppBar(
@@ -61,7 +59,6 @@ class _DashboardPageState extends State<DashboardPage> {
         actions: [
           InkWell(
             onTap: ()  {
-              transactApi.getUsers();
               // Navigator.of(context).pushNamed(
               //   RouteGenerator.notificationPage,
               // );
@@ -78,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
         shrinkWrap: true,
         padding: REdgeInsets.all(24),
         children: [
-           BalanceCard(accountNumber: storedAccountNumber!,accountBalance: '10,000'),
+           BalanceCard(accountNumber: storedAccountNumber,accountBalance: '10,000'),
           SizedBox(
             height: 24.h,
           ),
@@ -112,30 +109,34 @@ class _DashboardPageState extends State<DashboardPage> {
           SizedBox(
             height: 16.h,
           ),
-          SizedBox(
-            height: 56.h,
-            width: double.maxFinite,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemCount: transactApi.userList.length,
-                padding: REdgeInsets.all(0),
-                itemBuilder: (context, index) => Container(
-                      width: 56.w,
-                      height: 56.h,
-                      margin: REdgeInsets.only(right: 12.w),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.r))),
-                      child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(10.r)),
-                          child: Image.asset(
-                            'assets/images/friends_image.png',
-                            fit: BoxFit.fill,
-                          )),
-                    )),
+          Consumer<TransactionGetApi>(
+            builder: (context, snapshot,_) {
+              return SizedBox(
+                height: 56.h,
+                width: double.maxFinite,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.userList.length,
+                    padding: REdgeInsets.all(0),
+                    itemBuilder: (context, index) => Container(
+                          width: 56.w,
+                          height: 56.h,
+                          margin: REdgeInsets.only(right: 12.w),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r))),
+                          child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.r)),
+                              child: Image.asset(
+                                'assets/images/friends_image.png',
+                                fit: BoxFit.fill,
+                              )),
+                        )),
+              );
+            }
           ),
           SizedBox(
             height: 24.h,

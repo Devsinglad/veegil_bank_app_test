@@ -63,10 +63,11 @@ class CTextFormField extends StatelessWidget {
         border: kInputBorder,
         enabledBorder: kInputBorder,
         focusedBorder: kInputFocusBorder,
-        contentPadding: REdgeInsets.all(18),
+        //contentPadding: REdgeInsets.all(10),
 
         hintText: hintText,
         suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
       ),
       style: inputTextStyle,
       initialValue: initialValue,
