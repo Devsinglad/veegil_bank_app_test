@@ -1,5 +1,7 @@
 
 import '../../../src/auth_src.dart';
+import '../../../utils/helper.dart';
+import '../../../widgets/toast.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -124,9 +126,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(
-                      RouteGenerator.registerPage,
+                    print('pressed');
+
+                    ToastService2().showToast(
+                      message: 'Hello from Another File!',
+                      isError: false,
                     );
+                    // Navigator.of(context).pushNamed(
+                    //   RouteGenerator.registerPage,
+                    // );
                   },
                   child: Align(
                     alignment: Alignment.bottomLeft,
